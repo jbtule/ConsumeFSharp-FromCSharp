@@ -24,17 +24,17 @@ var two = Option.OfObj("2"); // Is it better than Some? Easier to import for sur
 var three = Some(3); //OptionInt? 
 var fourA = Some(Tuple.Create(4)); //OptionInt? 
 
-if(one is OptionTupInt {Value: var (a)}){ //Built in deconstruct for Option would be prefered
+if(one is OptionTupInt(var (a))){ //Built in deconstruct for Option would be prefered
     Console.WriteLine(a);
 }
 
-if(two is OptionString {Value: var b}){
+if(two is OptionString(var b)){
     Console.WriteLine(b);
 }
 
 two = OptionString.None; 
 
-if(two is OptionString {Value: var c}){
+if(two is OptionString(var c)){
     Console.WriteLine(c);
 }
 
@@ -57,10 +57,10 @@ var five = NewChoice1Of2(5u); //MyChoice? 🙄 Ideally would *NOT* be a Nullable
 var six = NewChoice2Of2('6'); //MyChoice? 🙄
 void DoItRefUnion (MyChoice choice) {
     switch (choice){
-        case MyChoice.Choice1Of2 {Item: var i}: //Built in deconstruct for Ref Style DU with values would be prefered
+        case MyChoice.Choice1Of2(var i): //Built in deconstruct for Ref Style DU with values would be prefered
             Console.WriteLine(i);
             break;
-        case MyChoice.Choice2Of2 {Item: var j}:
+        case MyChoice.Choice2Of2(var j):
             Console.WriteLine(j);
             break;
     };
@@ -74,8 +74,8 @@ var eight = NewChoice2Of2(8); //EasierChoice? 🙄
 
 int ChooseIt (EasierChoice choice) => 
     choice switch {
-        EasierChoice.Choice1Of2 {Item: var m} => m,
-        EasierChoice.Choice2Of2 {Item: var n} => n, 
+        EasierChoice.Choice1Of2(var m) => m,
+        EasierChoice.Choice2Of2(var n) => n, 
         _ => throw new InvalidOperationException()  //nullable ref or not, c# won't know Types are exhausted
     };
 
@@ -99,3 +99,17 @@ void DoItStructUnion (MyResult result) {
 
 DoItStructUnion(nineTen);
 DoItStructUnion(done);
+
+public static class FSharpDestructExt {
+    public static void Deconstruct<T>(this Microsoft.FSharp.Core.FSharpOption<T> option, out T value){
+        value = option.Value;
+    }
+
+    public static void Deconstruct<T, S>(this Microsoft.FSharp.Core.FSharpChoice<T, S>.Choice1Of2  choice, out T item){
+        item = choice.Item;
+    }
+
+    public static void Deconstruct<T, S>(this Microsoft.FSharp.Core.FSharpChoice<T, S>.Choice2Of2  choice, out S item){
+        item = choice.Item;
+    }
+}
