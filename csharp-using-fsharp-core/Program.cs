@@ -45,12 +45,12 @@ if(threeN is int d){
 }
 
 var fourN = Option.ToObj(fourA);
-if(fourN is var (e)){ //is var x allows null, but is var (x) uses decustruction so not null
-   Console.WriteLine(e);
+if(fourN is var (e)){ //is var x allows null, but is var (x) uses deconstruction, so not null
+    Console.WriteLine(e);
 }
 fourN = null;
 if(fourN is var (_)){ 
-   throw new InvalidOperationException();
+    throw new InvalidOperationException();
 }
 
 var five = NewChoice1Of2(5u); //MyChoice? 🙄 Ideally would *NOT* be a Nullable Ref
