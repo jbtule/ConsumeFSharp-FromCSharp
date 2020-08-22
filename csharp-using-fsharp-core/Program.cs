@@ -24,7 +24,7 @@ var two = Option.OfObj("2"); // Is it better than Some? Easier to import for sur
 var three = Some(3); //OptionInt? 
 var fourA = Some(Tuple.Create(4)); //OptionInt? 
 
-if(one is OptionTupInt(var (a))){ //Built in deconstruct for Option would be prefered
+if(one is OptionTupInt(var (a))){
     Console.WriteLine(a);
 }
 
@@ -57,7 +57,7 @@ var five = NewChoice1Of2(5u); //MyChoice? 🙄 Ideally would *NOT* be a Nullable
 var six = NewChoice2Of2('6'); //MyChoice? 🙄
 void DoItRefUnion (MyChoice choice) {
     switch (choice){
-        case MyChoice.Choice1Of2(var i): //Built in deconstruct for Ref Style DU with values would be prefered
+        case MyChoice.Choice1Of2(var i):
             Console.WriteLine(i);
             break;
         case MyChoice.Choice2Of2(var j):
