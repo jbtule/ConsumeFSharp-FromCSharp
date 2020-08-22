@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) 2020 Jay Tuley
+// MIT License
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FTypes.Poker;

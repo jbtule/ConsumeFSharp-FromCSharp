@@ -1,4 +1,7 @@
-﻿module Poker
+﻿// Copyright (c) 2020 Jay Tuley
+// MIT License
+
+module Poker
 open System
 
 exception ParseErrorException of string
