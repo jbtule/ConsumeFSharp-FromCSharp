@@ -51,7 +51,7 @@ namespace CSharpPoker
                 var typicalRanking = Enumerable.Range(lowHypothetical, 5).Reverse();
                 return h switch {
                     Hand hl when lowStraightRanking.SequenceEqual(Ranking(hl)) =>
-                        ScorableHand.NewEntireHand(hl.Select(c=>c.Rank == Ace ? new (1,c.Suit): c)),
+                        ScorableHand.NewEntireHand(hl.Select(c=>c.Rank == Ace ? c with {Rank =1}: c)),
                     Hand hx when typicalRanking.SequenceEqual(Ranking(hx)) =>
                         ScorableHand.NewEntireHand(hx),
                     _ => null
