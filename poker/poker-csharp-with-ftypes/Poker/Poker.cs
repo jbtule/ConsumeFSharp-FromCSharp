@@ -106,24 +106,24 @@ namespace CSharpPoker
                 new ScoringList(value, ScoreValue(ScorableHand));
             
             return hand switch {
-                Hand h when StraightFlushPattern(h) is ScorableHand s =>
+                _ when StraightFlushPattern(hand) is ScorableHand s =>
                     PrefixScore(8, s),
-                Hand h when OfAKindPattern(4,h) is ScorableHand s =>
+                _ when OfAKindPattern(4,hand) is ScorableHand s =>
                     PrefixScore(7, s),
-                Hand h when FullHousePattern(h) is ScorableHand s =>
+                _ when FullHousePattern(hand) is ScorableHand s =>
                     PrefixScore(6, s),
-                Hand h when FlushPattern(h) is ScorableHand s =>
+                _ when FlushPattern(hand) is ScorableHand s =>
                     PrefixScore(5, s),
-                Hand h when StraightPattern(h) is ScorableHand s =>
+                _ when StraightPattern(hand) is ScorableHand s =>
                     PrefixScore(4, s),
-                Hand h when OfAKindPattern(3, h) is ScorableHand s =>
+                _ when OfAKindPattern(3, hand) is ScorableHand s =>
                     PrefixScore(3, s),
-                Hand h when TwoPairPattern(h) is ScorableHand s =>
+                _ when TwoPairPattern(hand) is ScorableHand s =>
                     PrefixScore(2, s),
-                Hand h when OfAKindPattern(2, h) is ScorableHand s =>
+                _ when OfAKindPattern(2, hand) is ScorableHand s =>
                     PrefixScore(1, s),
-                Hand h =>
-                    PrefixScore(0, HighCardPattern(h))
+                _ =>
+                    PrefixScore(0, HighCardPattern(hand))
             };
         }
 
