@@ -122,8 +122,8 @@ namespace CSharpPoker
                     PrefixScore(2, s),
                 Hand h when OfAKindPattern(2, h) is ScorableHand s =>
                     PrefixScore(1, s),
-                Hand h when HighCardPattern(h) is ScorableHand s =>
-                    PrefixScore(0, s)
+                Hand h =>
+                    PrefixScore(0, HighCardPattern(h))
             };
         }
 
