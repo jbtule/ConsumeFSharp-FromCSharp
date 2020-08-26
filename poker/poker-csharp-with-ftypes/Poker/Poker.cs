@@ -92,13 +92,13 @@ namespace CSharpPoker
 
             static ScoringList ScoreValue(ScorableHand s) =>
                 s switch {
-                    ScorableHand.EntireHand { Item: var h} => 
+                    ScorableHand.EntireHand (var h) => 
                         Seq.ToList(new [] {RankValue(h)}),
-                    ScorableHand.SplitHand { Item1: var h, Item2: var k} => 
+                    ScorableHand.SplitHand(var h, var k) => 
                         Seq.ToList(new [] {RankValue(h), RankValue(k)}),
-                    ScorableHand.TwoHand {Item1: var bp, Item2: var sp, Item3: var k} =>
+                    ScorableHand.TwoHand (var bp, var sp,var k) =>
                         Seq.ToList(new [] {RankValue(bp), RankValue(sp), Rank(k)}),
-                    ScorableHand.NoHand {Item: var h} => Seq.ToList(Ranking(h)),
+                    ScorableHand.NoHand (var h) => Seq.ToList(Ranking(h)),
                     _ => throw new InvalidOperationException()
                 };
 
@@ -157,5 +157,24 @@ namespace CSharpPoker
                  .OrderByDescending(g=>g.Key)
                  .First()
                  .ToArray();
+    }
+
+    //Adding Deconstruct since FSharp code generation doesn't
+    public static class ScorableHandDeconstructExt{
+        public static void Deconstruct(this ScorableHand.EntireHand scoreableHand, out Hand scorable){
+            scorable = scoreableHand.Item;
+        }
+        public static  void Deconstruct(this ScorableHand.SplitHand scoreableHand, out Hand main, out Hand kicker){
+            main = scoreableHand.Item1;
+            kicker = scoreableHand.Item2;
+        }
+        public static  void Deconstruct(this ScorableHand.TwoHand scoreableHand, out Hand big, out Hand small, out Card kicker){
+            big = scoreableHand.Item1;
+            small = scoreableHand.Item2;
+            kicker = scoreableHand.Item3;
+        }
+        public static  void Deconstruct(this ScorableHand.NoHand scoreableHand, out Hand none){
+            none = scoreableHand.Item;
+        }
     }
 }
